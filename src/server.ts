@@ -9,6 +9,8 @@ import config from "./services/config";
 import createServer from "./services/createServer";
 import getPackageInfo from "./services/getPackageInfo";
 
+console.log("config", config);
+
 (async () => {
   // create express server application
   const app = express();
