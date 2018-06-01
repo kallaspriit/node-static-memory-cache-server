@@ -17,20 +17,20 @@ let urls: UrlLogItem[] = [];
 
 export default function statisticsMiddleware(): RequestHandler {
   return async (request: Request, response: Response, next: NextFunction) => {
-    const showDetails = request.query.details !== undefined;
+    const showStatistics = request.query.statistics !== undefined;
     const performReset = request.query.reset !== undefined;
     const elapsedTime = Math.ceil((Date.now() - startTime) / 1000);
     const requestsPerSecond = Math.round(requestCount / elapsedTime);
     const ip = request.ip;
 
     // reset if requested
-    if (showDetails && performReset) {
+    if (showStatistics && performReset) {
       requestCount = 0;
       startTime = Date.now();
       requests = [];
       urls = [];
 
-      response.redirect("/?details");
+      response.redirect("/?statistics");
 
       return;
     }
@@ -65,7 +65,7 @@ export default function statisticsMiddleware(): RequestHandler {
 
     urls[urlIndex].requestCount++;
 
-    if (!showDetails) {
+    if (!showStatistics) {
       next();
 
       return;
@@ -78,7 +78,7 @@ export default function statisticsMiddleware(): RequestHandler {
       <h1>Server statistics</h1>
       <p>Your ip: ${request.ip}</p>
       <p>Handled ${requestCount} requests in ${elapsedTime}s (${requestsPerSecond} requests per second)</p>
-      <p>Click <a href="/?details&reset">here</a> to reset counters.</p>
+      <p>Click <a href="/?statistics&reset">here</a> to reset counters.</p>
 
       <h2>High Scores</h2>
       <ol>
