@@ -1,0 +1,6 @@
+{
+  "extends": ["tslint-config-strict", "tslint-config-prettier"],
+  "rules": {
+    "no-null-keyword": false
+  }
+}
