@@ -5,11 +5,10 @@ import * as st from "st";
 import * as path from "path";
 import hostRedirectMiddleware from "./middlewares/hostRedirectMiddleware";
 import httpsRedirectMiddleware from "./middlewares/httpsRedirectMiddleware";
+import statisticsMiddleware from "./middlewares/statisticsMiddleware";
 import config from "./services/config";
 import createServer from "./services/createServer";
 import getPackageInfo from "./services/getPackageInfo";
-
-console.log("config", config);
 
 (async () => {
   // create express server application
@@ -17,6 +16,9 @@ console.log("config", config);
 
   // redirect to a single hostname
   app.use(hostRedirectMiddleware(config.hostname));
+
+  // gather statistics
+  app.use(statisticsMiddleware());
 
   // configure basic auth if enabled
   if (config.auth.enabled) {

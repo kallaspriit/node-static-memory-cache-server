@@ -5,6 +5,7 @@
 
 # public files
 /public
+public.zip
 
 # production
 /build
